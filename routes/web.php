@@ -1,10 +1,6 @@
 <?php
 
 /*
-Route::get('/user/login', [
-  'as' => 'loginForm',
-  'uses' => 'UserController@loginForm'
-]);
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -14,6 +10,9 @@ Route::get('/user/login', [
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => 'web'], function () {
+  Route::auth();
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,8 +47,20 @@ Route::get('/user/registerSuccess', function (){
 
 
 
-Route::post('/login', [
-    'as' => 'login',
+Route::post('/doLogin', [
+    'as' => 'doLogin',
     'uses' => 'UserController@doLogin'
 ]);
 
+Route::get('/user/profile', [
+  'as' => 'user/profile',
+  'uses' => 'UserController@profile'
+]);
+
+//Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('admin_area', ['middleware' => 'admin', function () {
+  //
+}]);

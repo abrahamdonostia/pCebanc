@@ -8,18 +8,14 @@
     <div class="w3-row-padding">
       <div class="w3-col m12">
         <div class="w3-card w3-round w3-white">
-            <form method="post" action="{{ url('login') }}">  
+            <form method="post" action="{{ url('doLogin') }}">  
                 {{ csrf_field() }}   
                 
                 <div class="w3-container w3-padding">
-                    @if ($error = $errors->first('password'))
-                        <div class="alert alert-danger">
-                            {{ $error }}
-                        </div>
-                    @endif
-                    @foreach ($errors->all('<p>:message</p>') as $input_error)
+                   
+                @foreach ($errors->all(':message') as $input_error)
                     {{ $input_error }}
-                  @endforeach 
+                @endforeach 
                     
                     <h6 class="w3-opacity">Inicia sessión</h6>
                 
