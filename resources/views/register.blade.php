@@ -20,7 +20,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                    @endif
                     <h6 class="w3-opacity">Registro de nuevo usuario</h6>
                
                

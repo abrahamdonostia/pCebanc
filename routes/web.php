@@ -57,7 +57,11 @@ Route::get('/user/profile', [
   'uses' => 'UserController@profile'
 ]);
 
-//Auth::routes();
+
+Route::post('user/updatePassword', [
+  'as' => 'user/updatePassword',
+  'uses' => 'UserController@updatePassword'
+]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
+use App\Rules\MatchOldPassword;
 
 
 class UserController extends Controller
@@ -115,6 +116,40 @@ class UserController extends Controller
             ]);    
         }
         else{
+            return redirect('user/loginPage');
+        }
+    }
+
+    public function updatePassword(Request $request){
+        if(\Auth::check()){
+            $user = Auth::user();
+            //Validar datos
+            $validate = Validator::make($request->all(), [ //validador de laravel usando el alias
+                'current_password' => 'required|min:6',
+                'current_password' => new MatchOldPassword, //Rule creada para confirmarlo
+                'new_password' => 'required|min:6',
+                'new_password_confirm' => 'same:new_password', //Comprobar que es el mismo
+            ]);
+
+            if ($validate->fails()) {
+                return redirect('user/profile')->withErrors($validate)->withInput();
+                
+            
+            
+            }else{ //Validacion correcta
+
+               if( User::find(auth()->user()->id)->update(['password'=> \Hash::make($request->new_password)])){
+                $success = new MessageBag(['success' => 'Guardado con éxito.']);
+                return Redirect::back()->with($success);
+               }else{
+
+                
+                $errors = new MessageBag(['password' => 'Email and/or password invalid.']); // if Auth::attempt fails (wrong credentials) create a new message bag instance.
+
+                return Redirect::back()->withErrors($errors);
+               }
+            }
+        }else{
             return redirect('user/loginPage');
         }
     }

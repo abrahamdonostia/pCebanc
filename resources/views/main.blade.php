@@ -24,17 +24,18 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
   
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
-  
-  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right" title="Account Settings">
-      <i class="fa fa-user">
-        @if (Auth::check())
-        {{ auth()->user()->name }}
-        @else
-        Login
-        @endif
-      </i>
-    </a>
-  
+  <div class="w3-dropdown-hover w3-hide-small w3-right">
+      <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings">
+          
+            @if (Auth::check())
+            {{ auth()->user()->name }} <i class="fa fa-user">
+            @else
+            <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="{{ url('user/loginPage') }}">Login</a>
+            <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="{{ url('user/register') }}">Registrarse</a>
+            @endif
+          </i>
+      </a>
+  </div>
   <div class="w3-dropdown-hover w3-hide-small">
     <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell">{{ Config::get('app.locale') }}</i><span class="w3-badge w3-right w3-small w3-green">3</span></button>
       <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">    
