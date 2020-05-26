@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
 use App\Rules\MatchOldPassword;
+use Image;
 
 
 class UserController extends Controller
@@ -152,6 +153,24 @@ class UserController extends Controller
         }else{
             return redirect('user/loginPage');
         }
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        if($request->hasFile('avatar'))
+        {
+            $avatar = $request->file('avatar');
+
+            $filename = time().'.'.$avatar->getClientOriginalExtension();
+
+            Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/users_avatars/'.$filename));
+            $user = Auth::user();
+
+            $user->avatar = $filename;
+
+            $user->save();
+        }
+        return redirect('user/profile');
     }
     
     

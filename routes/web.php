@@ -34,8 +34,8 @@ Route::get('/user/register/{error?}', [
   'uses' => 'UserController@registerForm'
 ]);
 
-Route::post('api/register', [
-  'as' => 'api/register',
+Route::post('user/register', [
+  'as' => 'user/register',
   'uses' => 'UserController@register'
 ]);
 
@@ -52,6 +52,8 @@ Route::post('/doLogin', [
     'uses' => 'UserController@doLogin'
 ]);
 
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 Route::get('/user/profile', [
   'as' => 'user/profile',
   'uses' => 'UserController@profile'
@@ -63,7 +65,12 @@ Route::post('user/updatePassword', [
   'uses' => 'UserController@updatePassword'
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('user/updateAvatar', [
+  'as' => 'user/updateAvatar',
+  'uses' => 'UserController@updateAvatar'
+]);
+
+
 
 Route::get('admin_area', ['middleware' => 'admin', function () {
   //

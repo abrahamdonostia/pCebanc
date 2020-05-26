@@ -8,7 +8,7 @@
     <div class="w3-row-padding">
       <div class="w3-col m12">
         <div class="w3-card w3-round w3-white">
-            <form method="POST" action="{{ route('api/register') }}">  
+            <form method="POST" action="{{ route('user/register') }}">  
                 {{ csrf_field() }}   
                 
                 <div class="w3-container w3-padding">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Contraseña</label>
-                        <input type="text" name="password" class="form-control" required>
+                        <input type="password" name="password" class="form-control" required>
                     </div>
                     <br>
                     <input type="submit" value="Registrate" class="w3-button w3-theme"> 

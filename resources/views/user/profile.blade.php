@@ -8,7 +8,7 @@
         <div class="container">
             <h1>Edit Profile</h1>
               <hr>
-            <form  method="POST" action="{{ route('api/register') }}">
+            <form  method="POST" action="{{ route('user/updateAvatar') }}">
                 <div class="row">
                
                     <!-- left column -->
