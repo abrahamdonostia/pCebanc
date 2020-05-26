@@ -1,5 +1,5 @@
 
-@extends('main');
+@extends('main')
 
 @section('content')
 <!-- Middle Column -->

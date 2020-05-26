@@ -1,12 +1,9 @@
 
-@extends('main');
+@extends('main')
 
 @section('content')
 <!-- Middle Column -->
-<div class="w3-col m8">
-    
-    <div class="w3-row-padding">
-      <div class="w3-col m12">
+
        
             
             <div class="col-md-12 blogShort">
@@ -50,7 +47,5 @@
             </div>
 
         
-      </div>
-    </div>
-</div>
+
 @endsection
