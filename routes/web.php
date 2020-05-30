@@ -14,9 +14,7 @@ Route::group(['middleware' => 'web'], function () {
   Route::auth();
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ArticleController@listLastArticles');
 
 /*Ruta para cambio de Idioma*/
 Route::get('setlocale/{locale}', function ($locale) {
@@ -75,3 +73,16 @@ Route::post('user/updateAvatar', [
 Route::get('admin_area', ['middleware' => 'admin', function () {
   //
 }]);
+
+Route::get('user/createArticle', 'UserController@createArticle');
+
+// Rutas Article******************************************
+Route::post('article/addArticle', [
+  'as' => 'addArticle',
+  'uses' => 'ArticleController@addArticle'
+]);
+
+Route::get('article/{articleId}', [
+  'as' => 'article',
+  'uses' => 'ArticleController@showArticle'
+]);

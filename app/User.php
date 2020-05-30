@@ -17,6 +17,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'surname', 'description', 'email', 'password', 'role', 'image', 'created_at', 'updated_at', 'activated'
     ];
+    //public $incrementeing=false;
+    protected $primaryKey = 'user_id';//Si por defecto el nombre del campo Id de la tabla no se llama id, hay que indicarle cual es 
 
     /**
      * The attributes that should be hidden for arrays.

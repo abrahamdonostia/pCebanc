@@ -9,6 +9,15 @@ class Category extends Model
 {
     protected $table = 'categories';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'category_id', 'main', 'parent'
+    ];
+
     public function articles(){
         return $this->hasMany('App\Article');
     }

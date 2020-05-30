@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use App\User;
+use App\Category;
 use Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -90,6 +91,7 @@ class UserController extends Controller
             $user->surname = $request['surname'];
             $user->email = $request['email'];
             $user->password = $pwd;
+            $user->image = 'avatar.jpg';
             $user->role = 'ROLE_USER';
             
             //guardar usuario
@@ -173,5 +175,13 @@ class UserController extends Controller
         return redirect('user/profile');
     }
     
-    
+    /////////fin   EDITAR USUARIO///////////////////
+    /////////SUBIR ARTICULO///////////////////
+   public function createArticle(){
+       //$categories = Category::all();
+       $categories = Category::whereNull('parentId')->get(); //select de las que son categorias raiz, mas adelante se actualizara con subcategorias
+       return view('user/createArticle', ["categories"=> $categories]);
+   }
+
+    /////////fin   CREAR ARTICULO///////////////////
 }

@@ -6,6 +6,7 @@
 <div class="w3-col m7">
     <div class="w3-row-padding">
         <div class="container">
+        <div class="w3-container w3-padding">
             <h1>Edit Profile</h1>
               <hr>
             <form  method="POST" action="{{ route('user/updateAvatar') }}">
@@ -88,6 +89,7 @@
                     </div>
                 </div>
             </form>
+        </div>
         </div>
         <hr>
 

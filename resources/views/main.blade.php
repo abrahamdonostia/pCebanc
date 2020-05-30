@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Simple Sidebar - Start Bootstrap Template</title>
+  <title>WikiCebanc</title>
 
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
@@ -28,14 +28,15 @@
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Start Bootstrap </div>
+      <a class="list-group-item list-group-item-action bg-light" href="{{ url('/') }}"><div class="sidebar-heading"> Wiki Cebanc</div></a> 
       <div class="list-group list-group-flush">
-        <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Hardware</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Desarrollo</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Sistemas</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Hacking</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Consolas</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Smartphone</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Networking</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -58,7 +59,7 @@
                 {{ auth()->user()->name }} <i class="fa fa-user"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                
+                <a class="dropdown-item" href="{{ url('user/createArticle') }}">Crear artículo</a>
                 <a class="dropdown-item" href="{{ url('user/profile') }}">Perfil</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ url('/logout') }}">Cerrar sesión</a>
@@ -91,6 +92,8 @@
   <!-- Bootstrap core JavaScript -->
   <script type="text/javascript" src="{{ URL::asset('js/jquery/jquery.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+  <script type="text/javascript" src="{{ URL::asset('js/ckeditor5-build-classic/ckeditor.js') }}"></script>
+  
  
 
   <!-- Menu Toggle Script -->
@@ -99,6 +102,15 @@
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
+    ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+
+   
+
+  
   </script>
 
 </body>
