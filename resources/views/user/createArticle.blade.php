@@ -6,7 +6,7 @@
 <div class="col-md-10"> 
     
     <div class="w3-card w3-round w3-white">
-                <form method="post" action="{{ url('article/addArticle') }}">  
+                <form method="post" action="{{ url('article/addArticle') }}" enctype="multipart/form-data">  
                     {{ csrf_field() }}   
                     
                     <div class="w3-container w3-padding">
@@ -41,6 +41,16 @@
                                     &lt;p&gt;This is some sample content.&lt;/p&gt;
                                 </textarea>
                             </div>
+                            <div class="form-group">
+                                <div class="avatar-wrapper">
+                                    <img src="{{ asset('/img/avatar/avatar2.png') }}" alt="articleImage" class="articleImage" />
+                                    <input name="image" class="file-upload" type="file" accept="image/*"/>
+                                </div>
+                            </div>
+                        </div>
+                    
+                
+  
                             <br>
                             <input type="submit" value="Enviar" class="btn btn-primary"> 
                         </div>

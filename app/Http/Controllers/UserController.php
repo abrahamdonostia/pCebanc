@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
 use App\Rules\MatchOldPassword;
-use Image;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 class UserController extends Controller
@@ -147,7 +147,7 @@ class UserController extends Controller
                }else{
 
                 
-                $errors = new MessageBag(['password' => 'Email and/or password invalid.']); // if Auth::attempt fails (wrong credentials) create a new message bag instance.
+                $errors = new MessageBag(['password' => 'Email o contraseña incorrectos.']); // if Auth::attempt fails (wrong credentials) create a new message bag instance.
 
                 return Redirect::back()->withErrors($errors);
                }
@@ -157,23 +157,7 @@ class UserController extends Controller
         }
     }
 
-    public function updateAvatar(Request $request)
-    {
-        if($request->hasFile('avatar'))
-        {
-            $avatar = $request->file('avatar');
-
-            $filename = time().'.'.$avatar->getClientOriginalExtension();
-
-            Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/users_avatars/'.$filename));
-            $user = Auth::user();
-
-            $user->avatar = $filename;
-
-            $user->save();
-        }
-        return redirect('user/profile');
-    }
+   
     
     /////////fin   EDITAR USUARIO///////////////////
     /////////SUBIR ARTICULO///////////////////
@@ -184,4 +168,35 @@ class UserController extends Controller
    }
 
     /////////fin   CREAR ARTICULO///////////////////
+
+    /////////SUBIR AVATAR DE USUARIO///////////////////
+    public function updateAvatar(Request $request){
+        
+            $validate = Validator::make($request->all(), [
+            
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            
+            if ($validate->fails()) {
+                return redirect('user/profile')->withErrors($errors)->withInput();
+            }
+            if($request->hasFile('image')){
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                Image::make($image)->resize(300, 300)->save('img/avatar/' . $filename);
+                User::where('user_id', Auth::user()->user_id)->update(array('image' => 'img/avatar/' . $filename));
+                
+               return Redirect::back()->with('message', 'imagen guardada con éxito');
+                
+            }else{
+                $errors = new MessageBag(['error' => 'Error al subir la imagen.']);
+                return Redirect::back()->withErrors($errors);
+            };
+        
+            
+    }
+
+       
+    
+/////////fin SUBIR AVATAR DE USUARIO///////////////////
 }

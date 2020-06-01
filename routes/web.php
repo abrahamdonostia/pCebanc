@@ -82,7 +82,12 @@ Route::post('article/addArticle', [
   'uses' => 'ArticleController@addArticle'
 ]);
 
-Route::get('article/{articleId}', [
+Route::get('article/{article}', [
   'as' => 'article',
   'uses' => 'ArticleController@showArticle'
+]);
+
+Route::get('article/category/{category}', [
+  'as' => 'article/category',
+  'uses' => 'ArticleController@listCategory'
 ]);

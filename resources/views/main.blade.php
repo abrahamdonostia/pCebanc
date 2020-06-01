@@ -19,7 +19,7 @@
   <!-- Custom styles for this template -->
   
   <link rel="stylesheet" href="{{ URL::asset('css/simple-sidebar.css') }}" />
-
+  <link href="{{ URL::asset('css/styles.css') }}" rel="stylesheet" type="text/css" >
 </head>
 
 <body>
@@ -30,13 +30,13 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
       <a class="list-group-item list-group-item-action bg-light" href="{{ url('/') }}"><div class="sidebar-heading"> Wiki Cebanc</div></a> 
       <div class="list-group list-group-flush">
-        <a href="#" class="list-group-item list-group-item-action bg-light">Hardware</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Desarrollo</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Sistemas</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Hacking</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Consolas</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Smartphone</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Networking</a>
+        <a href="/article/category/3" class="list-group-item list-group-item-action bg-light">Hardware</a>
+        <a href="/article/category/2" class="list-group-item list-group-item-action bg-light">Desarrollo</a>
+        <a href="/article/category/1" class="list-group-item list-group-item-action bg-light">Sistemas</a>
+        <a href="/article/category/4" class="list-group-item list-group-item-action bg-light">Hacking</a>
+        <a href="/article/category/5" class="list-group-item list-group-item-action bg-light">Consolas</a>
+        <a href="/article/category/6" class="list-group-item list-group-item-action bg-light">Smartphone</a>
+        <a href="/article/category/7" class="list-group-item list-group-item-action bg-light">Networking</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -107,7 +107,28 @@
             .catch( error => {
                 console.error( error );
             } );
+    $(document).ready(function() {
+	
+    var readURL = function(input) {
+      if (input.files && input.files[0]) {
+          var reader = new FileReader();
 
+          reader.onload = function (e) {
+              $('.profile-pic').attr('src', e.target.result);
+          }
+  
+          reader.readAsDataURL(input.files[0]);
+      }
+    }
+ 
+  $(".file-upload").on('change', function(){
+      readURL(this);
+  });
+  
+  $(".upload-button").on('click', function() {
+     $(".file-upload").click();
+  });
+});
    
 
   

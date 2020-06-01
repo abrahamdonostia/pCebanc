@@ -8,22 +8,44 @@
         <div class="container">
         <div class="w3-container w3-padding">
             <h1>Edit Profile</h1>
-              <hr>
-            <form  method="POST" action="{{ route('user/updateAvatar') }}">
+                <hr>
                 <div class="row">
+                   
+                
                
                     <!-- left column -->
                     <div class="col-md-3">
-                        <div class="text-center">
-                        <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
-                        <h6>Cambiar foto</h6>
-                        
-                        <input type="file" class="form-control">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
+                        @endif 
+                   
+                        <div class="avatar-wrapper">
+                            <form  method="POST" action="{{ route('user/updateAvatar') }}" enctype="multipart/form-data">
+                                {{ csrf_field() }} 
+                            @if(Auth::user()->image )
+                                <img src="{{ asset(''.$image.'') }}" alt="Avatar" class="avatar"/>
+                            @else
+                                <img src="{{ asset('/img/avatar/avatar2.png') }}" alt="Avatar" class="avatar" />
+                            @endif
+                            
+                            <input name="image" class="file-upload" type="file" accept="image/*"/>
+                            <input type="submit" class="btn btn-primary" value="Subir imagen">
+                            </form>
+                        </div>
+                    
                     </div>
                     
+                    <div class="col-md-1">
+                    </div>
+                
                     <!-- edit form column -->
-                    <div class="col-md-9 personal-info">
+                    <div class="col-md-8 personal-info">
                         
                         <h3>Información personal</h3>
                         
@@ -73,24 +95,25 @@
                             <div class="col-md-8">
                             <input type="submit" class="btn btn-primary" value="Cambiar Password">
                             <span></span>
-                            <input type="reset" class="btn btn-default" value="Cancelar">
+                            
                             </div>
                         </div>   
-                        @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif    
+                       
+                        @if (session()->has('message'))
+                        <div class="alert alert-success">
+                            <ul>
+                                
+                                <li> {{ session()->get('message') }}</li>
+                               
+                            </ul>
+                        </div>
+                        @endif     
                     </form>        
-                    </div>
                 </div>
-            </form>
-        </div>
-        </div>
+            
+        </form>
+    </div>
+</div>
         <hr>
 
     </div>

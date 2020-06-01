@@ -3,57 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Image;
 
-class ImageUploadController extends Controller
-
+Class imageUploadController extends Controller{
+public function store(Request $request)
 {
-    /**
+    $this->validate($request, array(
+    'name' => 'required',
+    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ));
+    //save the data to the database
+    $person  = new article ;
+    $person->name = $request->name;
 
-     * Display a listing of the resource.
+    if($request->hasFile('image')){
+        $image = $request->file('image');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->resize(300, 300)->save( storage_path('/uploads/' . $filename ) );
+        $person->image = $filename;
+        $person->save();
+    };
 
-     *
+    $person->save();
 
-     * @return \Illuminate\Http\Response
-
-     */
-
-
-    /**
-
-     * Display a listing of the resource.
-
-     *
-
-     * @return \Illuminate\Http\Response
-
-     */
-
-    public function imageUploadPost()
-
-    {
-
-        request()->validate([
-
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
-        ]);
-
-  
-
-        $imageName = time().'.'.request()->image->getClientOriginalExtension();
-
-  
-
-        request()->image->move(public_path('images'), $imageName);
-
-  
-
-        return back()
-
-            ->with('success','You have successfully upload image.')
-
-            ->with('image',$imageName);
-
-    }
-
+    return redirect()->route('people.index')
+    ->with('success','Item created successfully');
+}
 }

@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Category;
 use Auth;
+use DB;
+use App\Quotation;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 
@@ -30,6 +34,7 @@ class ArticleController extends Controller
                 'description' => 'required|min:20', 
                 'content' => 'required|min:40',
                 'category' => 'required|in:1,2,3,4,5,6,7',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 
             ]);
 
@@ -39,16 +44,21 @@ class ArticleController extends Controller
             
             
             }else{ //Validacion correcta
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                Image::make($image)->save('img/article/' . $filename);
+
                 $article = new Article();
                 $article->user_id = Auth::user()->user_id;
                 $article->title = $request['title'];
                 $article->description = $request['description'];
                 $article->text = $request['content'];
                 $article->category_id = $request['category'];
+                $article->image = ('img/article/' . $filename);
 
                if($article->save()){
                     $success = new MessageBag(['success' => 'Guardado con éxito.']);
-                    return redirect('/article/{articleId}')->with($success);
+                    return redirect('article/'.$article->id);
                }else{
 
                 
@@ -62,7 +72,18 @@ class ArticleController extends Controller
         }
     }
 
-    public function showArticle($article){
-       // Article::where('id', $article)->first();
+    public function showArticle($id){
+        //$article = $request->get('article');
+        $article = Article::find($id);
+        $image = $article->image;
+       return view('article')->with([
+           'article' => $article,
+           'image' => $image
+           ]);
+    }
+
+    public function listCategory($category){
+        $articles=DB::table('articles')->where('category_id', $category)->paginate(10);
+        return view('categoryList', ['articles' => $articles]);
     }
 }
