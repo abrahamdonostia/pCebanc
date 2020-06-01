@@ -20,7 +20,7 @@ class ArticleController extends Controller
 {
     public function listLastArticles(){
 
-        $articles = Article::all()->take(5);
+        $articles = Article::orderBy('id', 'desc')->take(8)->get();
         return view('welcome')->with('articles', $articles);
 
     }

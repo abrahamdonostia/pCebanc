@@ -6,12 +6,12 @@
 <section>
 @foreach($articles as $article)
 
-  
+<a href="/article/{{ $article->id }}" style="text-decoration: none; color:black">
     <div class="container py-3">
       <div class="card">
         <div class="row ">
             <div class="col-md-3">
-              <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100">
+              <img src="{{ asset($article->image) }}" class="w-100">
             </div>
             <div class="col-md-8 px-3">
             <div class="card-block px-3">
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-  
+</a>
 
   @endforeach
   <section>       
